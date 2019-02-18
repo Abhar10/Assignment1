@@ -9,7 +9,7 @@ import java.util.Scanner;
  * AdminUtil Class contains all the methods required by Admin Class.
  * 
  * @author Abhar Sinha
- *
+ * @since 2019-02-18
  */
 public class AdminUtil {
 	//Method to create a new customer
@@ -137,7 +137,7 @@ public class AdminUtil {
 	//Method to generate prizes according to the condition
     public static void generatePrizes(ArrayList<Customer> customerList) {
 		
-    	int prizeCount=0;
+    	        int prizeCount=0;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter 3 valid customer ID's");
 		//HashSet to store user inputed ID's

@@ -1,3 +1,4 @@
+package assignment1;
 /**
  * Car class stores information of a car such as Car ID, Car Model, Car Price
  * and calculates the resale calue of the Car.

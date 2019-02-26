@@ -1,4 +1,5 @@
-package assignment1;
+package model;
+
 import java.util.ArrayList;
 
 /**
@@ -29,8 +30,7 @@ public class Customer {
 	}
 	
 	//Getter function to get customer Name
-	public String getCustomerName()
-	{
+	public String getCustomerName() {
 		return mCustomerName;
 	}
 	
@@ -38,5 +38,10 @@ public class Customer {
 	public void addCarToCustomer(final Car car)
 	{
 		this.carList.add(car);
-	}		
+	}
+
+	
+
+			
 }
+

@@ -1,12 +1,17 @@
-package assignment1;
+package util;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Scanner;
 
-import utilpackage.ValidationCheck;
+import util.ValidationCheck;
+import model.Customer;
+import model.Car;
+import model.Toyota;
+import model.Maruti;
+import model.Hyundai;
+
 
 /**
  * AdminUtil Class contains important methods required by Admin Class.

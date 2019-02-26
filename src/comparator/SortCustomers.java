@@ -1,10 +1,10 @@
-package utilpackage;
+package comparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import assignment1.Customer;
-import assignment1.Car;
+import model.Customer;
+
 
 /**
  * Class sorts the customer according to their name

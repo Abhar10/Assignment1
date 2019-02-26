@@ -1,11 +1,15 @@
-package assignment1;
+package controller;
+
 import java.util.ArrayList;
 
 import java.util.HashSet;
 import java.util.Scanner;
 
-import utilpackage.GeneratePrize;
-import utilpackage.SortCustomers;
+import util.AdminUtil;
+import util.GeneratePrize;
+import comparator.SortCustomers;
+import model.Car;
+import model.Customer;
 
 /**
  * Admin class returns the result as per the request of the admin.

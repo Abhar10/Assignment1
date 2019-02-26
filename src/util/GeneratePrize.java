@@ -1,11 +1,13 @@
-package utilpackage;
+package util;
+
+
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
-import assignment1.Customer;
+import model.Customer;
 
 /**
  * Class to generate Prize according to the condition that the three admin entered ID 
@@ -72,3 +74,4 @@ public final class GeneratePrize {
 			}
 		}
 }
+

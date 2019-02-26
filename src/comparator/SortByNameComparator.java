@@ -1,8 +1,9 @@
-package utilpackage;
+package comparator;
+
 
 import java.util.Comparator;
+import model.Customer;
 
-import assignment1.Customer;
 
 /**
  * Class SortByName implements the Java Interface Comparator. This Class sorts the 
@@ -16,6 +17,7 @@ class SortByNameComparator implements Comparator<Customer>
     //Compare customers according to their name
     public int compare(final Customer customer1, final Customer customer2) 
     { 
+    	
         if(customer1.getCustomerName().compareTo(customer2.getCustomerName()) == 0)
         {
         	return 0;

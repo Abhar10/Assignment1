@@ -12,7 +12,7 @@ public class Customer {
 	
 	private int mCustomerId;
 	private String mCustomerName;
-	ArrayList<Car> carList = new ArrayList<Car>();
+	public ArrayList<Car> carList = new ArrayList<Car>();
 	
 	public Customer(final int customerId, final String customerName, final ArrayList<Car> carList)
 	{
@@ -21,16 +21,19 @@ public class Customer {
 		this.mCustomerName = customerName;
 		this.carList = new ArrayList<Car>(carList);
 	}
+	
 	//Getter function to get customer ID
 	public int getCustomerId()
 	{
 		return mCustomerId;
 	}
+	
 	//Getter function to get customer Name
 	public String getCustomerName()
 	{
 		return mCustomerName;
 	}
+	
 	//Function to add new car to the created customer object
 	public void addCarToCustomer(final Car car)
 	{

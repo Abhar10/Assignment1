@@ -1,7 +1,11 @@
 package assignment1;
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Scanner;
+
+import utilpackage.GeneratePrize;
+import utilpackage.SortCustomers;
 
 /**
  * Admin class returns the result as per the request of the admin.
@@ -23,22 +27,27 @@ public class Admin {
 		Scanner sc = new Scanner(System.in);
 		
 		printChoice();
+		
 		//Inputs the choice by admin
 		int choice = sc.nextInt();
 		
+		//If user input choice 0 exit the program
 		while(choice != 0)
 		{
 			
 		switch(choice) {
 		
+		//Case 1 to add New Customer
 		case 1:
 			AdminUtil.addNewCustomer(carList, customerList, idHashSet);
 			break;
 			
+		//Cas2 to add Car To A Customer	
 		case 2:
 			AdminUtil.addCarToExistingCustomer(customerList);
 			break;
 			
+		//Case 3 to search a Customer given his ID	
 		case 3:
 			System.out.println("Enter a valid Id of Customer to search the respective Customer" );
 			int inputId = sc.nextInt();
@@ -46,26 +55,32 @@ public class Admin {
 			AdminUtil.printCustomerNameById(inputId, customerList);
 			break;
 			
+		//Case 4 to Sort Customers By their Name	
 		case 4:
-			AdminUtil.sortCustomersByName(customerList);
+			SortCustomers.printSortedCustomersByName(customerList);
 			break;
 			
+		//Case 5 to generate prize according to the condition	
 		case 5:
-			AdminUtil.generatePrizes(customerList);
+			GeneratePrize.generatePrizes(customerList);
 			break;
 			
+		//Case default is the case when user enters anything except number 0-5	
 		default:
 			System.out.println("Not a Valid Choice");
 			break;
 		}
 		
+		//Call printChoice() method to get available chices to the admin
 		printChoice();
 		choice = sc.nextInt();
 		
 		}
 	}
 	
-	//Method to Print the options avaiable to the Admin
+	/**
+	 * Method to Print the options avaiable to the Admin
+	 */
     public static void printChoice()
 	{
 		System.out.println("Input 1 to Add a new Customer");

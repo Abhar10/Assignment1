@@ -6,29 +6,40 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
+import utilpackage.ValidationCheck;
+
 /**
- * AdminUtil Class contains all the methods required by Admin Class.
+ * AdminUtil Class contains important methods required by Admin Class.
  * 
  * @author Abhar Sinha
  * @since 2019-02-18
  */
-public class AdminUtil {
-	//Method to create a new customer
-	public static void addNewCustomer(ArrayList<Car> carList, ArrayList<Customer> customerList, HashSet<Integer> idHashSet)
+public final class AdminUtil {
+	
+	/**
+	 * Method to add a new customer
+	 * 
+	 * @param carList Method Takes the list of cars owned by a customer
+	 * @param customerList Method Takes the list of customers entered by admin
+	 * @param idHashSet Stores the ID's of the all the customers 
+	 */
+	public static void addNewCustomer(final ArrayList<Car> carList, ArrayList<Customer> customerList, HashSet<Integer> idHashSet)
 	{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Input Customer ID and Customer Name");
 		int custIdInput = sc.nextInt();
+		
 		//Check if the Entered ID is unique and is not used by any other customer
-		if(isIdUnique(custIdInput, idHashSet) != true)
+		if(ValidationCheck.isIdUnique(custIdInput, idHashSet) != true)
 		{
 			System.out.println("Please Enter a Unique Customer Id");
 			return;
 		}
 		idHashSet.add(custIdInput);
 		String custNameInput = sc.next();
+		
 		//check if Name consists of valid characters
-		if(isValidName(custNameInput) != true)
+		if(ValidationCheck.isValidName(custNameInput) != true)
 		{
 			System.out.println("Please enter a valid Customer Name");
 			return;
@@ -37,19 +48,29 @@ public class AdminUtil {
 	    Customer customerObj = new Customer(custIdInput, custNameInput, carList);
 	    customerList.add(customerObj);
 	}
-	//Method to add new car to a customer
-	public static void addCarToCustomer(int customerId, Car car, ArrayList<Customer> customerList)
+	
+	/**
+	 * Method to add Car to an existing customer
+	 * 
+	 * @param customerId The id of customer to whom new car added
+	 * @param car The new car to be added
+	 * @param customerList List of customers entered by admin
+	 */
+	public static void addCarToCustomer(final int customerId, final Car car, ArrayList<Customer> customerList)
 	{
 		int i, customerFlag = 0;
+		//Search the List of Customers to whom new car to be added
 		for(i=0;i<customerList.size();i++)
 		{
 			if(customerId == customerList.get(i).getCustomerId())
 			{
+				//If customer with entered ID found set the customerFlag
 				customerFlag = 1;
 				break;
 			}
 		}
 		
+		//If No Customer with entered ID exists in the list
 		if(customerFlag == 0)
 		{
 			System.out.println("No Customer with Inputed Id Found");
@@ -59,7 +80,11 @@ public class AdminUtil {
 		customerList.get(i).addCarToCustomer(car);
 	}
 	
-	//Method to add new car to an existing customer
+	/**
+	 * Method to add car to an existing customer according to the Car Type
+	 * 
+	 * @param customerList The list stores all the customers
+	 */
 	public static void addCarToExistingCustomer(ArrayList<Customer> customerList)
 	{
 	   Scanner sc = new Scanner(System.in);
@@ -74,27 +99,40 @@ public class AdminUtil {
 	   System.out.println("Input Type of the Car");
 	   String carTypeInput = sc.next();
 	
+	   //If car type is Toyota
 	   if(carTypeInput.equals("Toyota"))
 	   {	
 	    	addCarToCustomer(customerIdInput, new Toyota(carIdInput, carPriceInput, carModelInput), customerList);
 	   }
+	   //If car type is Maruti
 	   else if(carTypeInput.equals("Maruti"))
 	   {
 		    addCarToCustomer(customerIdInput, new Maruti(carIdInput, carPriceInput, carModelInput), customerList);
 	   }
+	   //If car type is Hyundai
 	   else if(carTypeInput.equals("Hyundai"))
 	   {
 		    addCarToCustomer(customerIdInput, new Hyundai(carIdInput, carPriceInput, carModelInput), customerList);
 	   }
+	   //If any other type except the three entered
 	   else
 	   {
 		    System.out.println("Input Car Type not a valid Car Type");
      	}
 	  }
-	//Method to find customer name by ID
-	public static void printCustomerNameById(int id, ArrayList<Customer> customerList)
+	
+	/**
+	 * Method to print customer name given provided his ID
+	 * 
+	 * @param id ID of the customer whose corresponding name the admin wants
+	 * @param customerList List of the customers
+	 */
+	
+	public static void printCustomerNameById(final int id, final ArrayList<Customer> customerList)
 	{
 		Iterator<Customer> iter = customerList.iterator();
+		
+		//Check the Customer List if customer with entered ID exists
 		while(iter.hasNext())
 		{
 			Customer tempCustomer = iter.next();
@@ -105,125 +143,10 @@ public class AdminUtil {
 				return;
 			}
 		}
+		//If no customer with entered ID found
 		System.out.println("Please input an existing ID");
 	}
-	//Method to sort customers by name and print them with their cars
-	public static void sortCustomersByName(ArrayList<Customer> customerList)
-	{
-		if(customerList.size() == 0)
-		{
-			System.out.println("There are currently no Customer");
-			return;
-		}
-		
-		Collections.sort(customerList, new SortByName());
-		for(int i=0; i<customerList.size(); i++)
-		{
-			
-			System.out.println("Name of the customer is " + customerList.get(i).getCustomerName());
-			if(customerList.get(i).carList.size() == 0)
-			{
-				System.out.println(customerList.get(i).getCustomerName() + " owns no car");
-			}
-			else
-			{
-				System.out.println(customerList.get(i).getCustomerName() +" owns the following car(s)");
-			    for(int j=0; j<customerList.get(i).carList.size(); j++)
-			    {
-				    System.out.println(customerList.get(i).carList.get(j).getCarModel());
-			    }
-			}
-		}
 	}
-	//Method to generate prizes according to the condition
-    public static void generatePrizes(ArrayList<Customer> customerList) {
-		
-    	        int prizeCount=0;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Please enter 3 valid customer ID's");
-		//HashSet to store user inputed ID's
-		HashSet<Integer> idSet = new HashSet<Integer>();
-		Random rand = new Random();
-		
-		for(int i=0; i<3; i++)
-		{
-		    idSet.add(sc.nextInt());
-		}
-
-		for(int i=0; i<6; i++)
-		{
-			int randomNum = rand.nextInt(6);
-			
-			//Check whether the number of customers is not less than 6
-			if(customerList.size() <= randomNum)
-			{
-			   //Check if no one among the customer has won the prize
-			   if(i == 5 && prizeCount == 0)
-			   {
-				   System.out.println("No one was lucky enough to win the prize");
-			   }
-			   //Skip the current i and move to the next value of i
-			   continue;
-			}
-			
-			int randomCustomerId = customerList.get(randomNum).getCustomerId();
-			//Check which random ID's does HashSet contains
-			if(idSet.isEmpty() != true && idSet.contains(randomCustomerId) == true)
-			{
-				//Remove customer from HashSet to enable no repetition
-				idSet.remove(randomCustomerId);
-				System.out.println("Custome with Id " + randomCustomerId + " has won the price");
-				prizeCount++;
-			}
-			//Check if no one among the customer has won the prize
-			else if(i == 5 && prizeCount == 0)
-			{
-				System.out.println("No one was lucky enough to win the prize");
-			}
-			}
-		}
+	
     
-    //Check if the entered name contains characters between a-z and A-Z
-    public static boolean isValidName(String customerName)
-    {
-    	int countValidChar = 0;
-    	int nameLength = customerName.length();
-    	
-    	for(int i = 0; i < nameLength; i++)
-    	{
-    		int asciiValue = customerName.charAt(i);
-    		if((asciiValue >= 65 && asciiValue <= 90) || (asciiValue >= 97 && asciiValue <= 122))
-    		{
-    			countValidChar++;
-    		}
-    	}
-    	//if all characters are valid
-    	if(countValidChar == nameLength)
-    	{
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
-    }
     
-    //Method to check if entered ID is not used by any other Customer
-    public static boolean isIdUnique(int id, HashSet<Integer> idSet)
-    {
-    	if(idSet.isEmpty() != true)
-    	{
-    	if(idSet.contains(id) == true)
-    	{
-    		return false;
-    	}
-    	else
-    	{
-    		return true;
-    	}
-    	}
-    	return true;
-    }
-	}
-
-
